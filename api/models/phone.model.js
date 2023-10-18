@@ -10,16 +10,17 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER, // Assuming number data type
         },
         
-        type: {
-            type: Sequelize.STRING, 
+        name: {
+            type: Sequelize.STRING,
         },
 
-        // contactId: {
-        //     type: Sequelize.INTEGER,
-        //     references: {
-        //       model: "contacts",
-        //       key: "id",
-        //     },
+        contactId: {
+            type: Sequelize.INTEGER,
+            references: {
+              model: "contacts",
+              key: "id",
+            },
+        },
     });
   
     return Phone;
