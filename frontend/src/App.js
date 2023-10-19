@@ -2,16 +2,19 @@ import { useState, useEffect, useCallback } from "react";
 import './index.css'; 
 
 function App() {
+    // stating variables
     const [contacts, getContacts] = useState([]);
     const [newContactName, setNewContactName] = useState("");
     const [isDivVisible, setDivVisibility] = useState(false);
     const [statsData, setStatsData] = useState(null);
 
+    // function to fetch data from an API
     const fetchData = async (url, options = {}) => {
         const response = await fetch(url, options);
         return response.json();
     };
 
+    // function to fetch contacts from the API
     const fetchContacts = useCallback(async () => {
         try {
             const data = await fetchData("http://localhost:5000/api/contacts");
@@ -19,12 +22,14 @@ function App() {
         } catch (error) {
             console.log("Error fetching data:", error);
         }
-    }, []);
+    }, []); // empty dependency array means this is only called on mount
 
+    // fetch contacts when mounting or when fetchContacts changes
     useEffect(() => {
         fetchContacts();
     }, [fetchContacts]);
 
+    // function to create a new contact
     const createContact = async (name) => {
       if (name.trim() === "") {
           alert("Contact name cannot be blank");
@@ -36,13 +41,15 @@ function App() {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ name }),
           });
-          // Clear the input text
+          // clear the input text
           setNewContactName("");
           fetchContacts();
       } catch (error) {
           console.log("Error:", error);
       }
   };
+
+  // function to delete a contact
   const deleteContact = async (contactId) => {
     try {
         const response = await fetchData(`http://localhost:5000/api/contacts/${contactId}`, {
@@ -60,6 +67,7 @@ function App() {
     }
     };
 
+    // function to fetch statistics data
     const fetchStatsData = async () => {
         try {
           const response = await fetchData('http://localhost:5000/api/stats');
@@ -74,6 +82,7 @@ function App() {
         }
       };
 
+    // function to toggle the visibility of stats div
       const toggleDiv = () => {
         setDivVisibility(!isDivVisible);
         if (isDivVisible) {
@@ -84,13 +93,11 @@ function App() {
       };
 
     return (
-    
+        <div className="contentTitle">
+          <h1>Contactor</h1>
           <div className="container">
-              <div className="contentTitle">
-            <h1>Contactor</h1>
-          </div>
             <div className="mainContainer">
-              <h2 className="header">Contact</h2>
+              <h2 className="header">Contacts</h2>
               <div className="contactForm">
                 <input
                   className="input"
@@ -126,7 +133,6 @@ function App() {
                 </div>
                 {isDivVisible && (
                     <div className="container-stats">
-                        {/* Display stats data when the div is visible */}
                         {statsData ? (
                             <div className="center-text">
                             <p><b>Total Contacts:</b> <br />{statsData.totalContacts}</p>
@@ -141,15 +147,19 @@ function App() {
                 )}
             </div>
         </div>
+      </div>
+
 );
 }
 
 function ContactCard({ contact, deleteContact, fetchData }) {
+    //Defining required variables
     const [phones, setPhones] = useState([]);
     const [phoneName, setPhoneName] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [showDetails, setShowDetails] = useState(false);
 
+    //function to fetch phones 
     const fetchPhones = async () => {
         try {
             const data = await fetchData(`http://localhost:5000/api/contacts/${contact.id}/phones`);
@@ -163,6 +173,7 @@ function ContactCard({ contact, deleteContact, fetchData }) {
         fetchPhones();
     }, [contact.id, fetchData]);
 
+     //function to add phones
     const addPhone = async () => {
         if (!phoneName.trim() || !phoneNumber.trim()) {
         alert("Both phone name and number are required!");
@@ -186,6 +197,7 @@ function ContactCard({ contact, deleteContact, fetchData }) {
         }
     };
 
+      //function to delete phones
     const deletePhone = async (phoneId) => {
         try {
         await fetchData(`http://localhost:5000/api/contacts/${contact.id}/phones/${phoneId}`, {
