@@ -23,8 +23,8 @@ exports.create = (req, res) => {
 
 // Get all phones
 exports.findAll = (req, res) => {
-    
-    Phones.findAll()
+    const contactId = req.params.contactId;
+    Phones.findAll({ where: { contactId: contactId } })
         .then(data => {
             res.send(data);
         })
@@ -58,8 +58,8 @@ exports.findOne = (req, res) => {
 
 // Update one phone by id
 exports.update = (req, res) => {
-    const id = req.params.phoneId; // Assuming the phone ID is passed as a route parameter
-    const updatedData = req.body; // Assuming the updated data is in the request body
+    const id = req.params.phoneId; 
+    const updatedData = req.body; 
 
     Phones.update(updatedData, {
         where: { id }

@@ -64,7 +64,7 @@ exports.update = (req, res) => {
         where: { id: id },
       })
         .then(num => {
-            if (num == 1) {
+            if (num === 1) {
                 res.send({ message: "Contact was updated successfully." });
             } else {
                 res.status(404).send({
@@ -82,13 +82,12 @@ exports.update = (req, res) => {
 // Delete one contact by id
 exports.delete = (req, res) => {
     const id = req.params.contactId; 
-
     Contacts.destroy({
         where: { id: id },
       })
         .then(num => {
-            if (num == 1) {
-                res.send({ message: "Contact was deleted successfully." });
+            if (num === 1) {
+                res.status(200).send({ message: "Contact was deleted successfully." });
             } else {
                 res.status(404).send({
                     message: `Contact having id ${id} not found.`

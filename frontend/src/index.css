@@ -2,4 +2,179 @@
     width: 100vw;
     height: 100vh;
     margin: 0;
+    font-family: 'Roboto', sans-serif;
 } 
+
+.contentTitle {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  margin: 0 auto;
+}
+
+.scrollable-container {
+  max-height: 300px; /* Set your desired maximum height */
+  overflow-y: auto; /* Add vertical scrollbar when content exceeds the height */
+}
+
+.details {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container {
+  width: 50%;
+  margin: 0 auto;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(92, 92, 92, 0.141);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.header {
+  font-weight: bold;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  margin: 0 auto;
+}
+
+.footer p {
+  color: #ccc;
+}
+
+.contactForm {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.input {
+  flex: 1;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  margin-left: 10px;
+  color: white;
+  background-color: #4CAF50;
+}
+.contactCard {
+  border: 1px solid #e0e0e0;
+  padding: 15px;
+  margin-top: 20px;
+  border-radius: 5px;
+  position: relative;
+}
+
+.phoneInput {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.phoneRow {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.deleteButton {
+  background-color: red;
+  color: white;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.row {
+  display: flex;
+}
+
+.headerCell {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  font-weight: bold;
+  text-align: left;
+}
+
+.cell {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+}
+
+.lastCell {
+  text-align: center;
+  margin: 0;
+}
+
+.buttonAdd {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.buttonDelete {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.contactDeleteButton {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.container-stats {
+  width: 50%;
+  margin: 0 auto;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(92, 92, 92, 0.141);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
