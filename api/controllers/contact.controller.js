@@ -58,20 +58,20 @@ exports.findOne = (req, res) => {
 
 // Update one contact by id
 exports.update = (req, res) => {
-    const id = req.params.contactId; 
+    const id = req.params.contactId;
 
     Contacts.update(req.body, {
         where: { id: id },
-      })
-        .then(num => {
+        returning: true, 
+    })
+        .then(([num, updatedContacts]) => {
             if (num === 1) {
-                res.send({ message: "Contact was updated successfully." });
-            } 
-            // else {
-            //     res.status(404).send({
-            //         message: `Contact having id: ${id} not found.`
-            //     });
-            // }
+                res.send({ message: "Contact was updated successfully.", contact: updatedContacts[0] });
+            } else {
+                res.status(404).send({
+                    message: `Contact having id: ${id} not found.`
+                });
+            }
         })
         .catch(err => {
             res.status(500).send({

@@ -64,15 +64,16 @@ exports.findOne = (req, res) => {
 
 // Update one phone by id
 exports.update = (req, res) => {
-    const id = req.params.phoneId; 
-    const updatedData = req.body; 
+    const id = req.params.phoneId;
+    const updatedData = req.body;
 
     Phones.update(updatedData, {
-        where: { id }
+        where: { id },
+        returning: true // This is important to get the updated phone details
     })
-        .then(num => {
+        .then(([num, [updatedPhone]]) => {
             if (num == 1) {
-                res.send({ message: "Phone was updated successfully." });
+                res.send({ message: "Phone was updated successfully", phone: updatedPhone });
             } else {
                 res.status(404).send({
                     message: `Phone with id ${id} not found.`
@@ -85,6 +86,7 @@ exports.update = (req, res) => {
             });
         });
 };
+
 
 // Delete one phone by contactId and phoneId
 exports.delete = (req, res) => {
