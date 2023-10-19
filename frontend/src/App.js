@@ -92,6 +92,11 @@ function App() {
         }
       };
 
+      // Function to refresh statistics data
+    const refreshStats = () => {
+        fetchStatsData();
+    };
+
     return (
         <div className="contentTitle">
           <h1>Contactor</h1>
@@ -139,6 +144,9 @@ function App() {
                             <p><b>Total Phones:</b> <br />{statsData.totalPhones}</p>
                             <p><b>Newest Contact Timestamp:</b><br /> {statsData.newestContactTimestamp}</p>
                             <p><b>Oldest Contact Timestamp:</b><br /> {statsData.oldestContactTimestamp}</p>
+                            <button className="showButton" onClick={refreshStats}>
+                                Refresh Stats
+                            </button>
                             </div>
                         ) : (
                             <p>Loading stats...</p>

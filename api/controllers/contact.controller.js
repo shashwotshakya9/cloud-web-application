@@ -66,11 +66,12 @@ exports.update = (req, res) => {
         .then(num => {
             if (num === 1) {
                 res.send({ message: "Contact was updated successfully." });
-            } else {
-                res.status(404).send({
-                    message: `Contact having id: ${id} not found.`
-                });
-            }
+            } 
+            // else {
+            //     res.status(404).send({
+            //         message: `Contact having id: ${id} not found.`
+            //     });
+            // }
         })
         .catch(err => {
             res.status(500).send({

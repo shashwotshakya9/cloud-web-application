@@ -35,17 +35,23 @@ exports.findAll = (req, res) => {
         });
 };
 
-// Get one phone by id
+// Get one phone by contactId and phoneId
 exports.findOne = (req, res) => {
-    const id = req.params.phoneId;
+    const contactId = req.params.contactId;
+    const phoneId = req.params.phoneId;
 
-    Phones.findByPk(id)
+    Phones.findOne({
+        where: {
+            id: phoneId,
+            contactId: contactId
+        }
+    })
         .then(data => {
             if (data) {
-                res.send(data); // Respond with the found phone
+                res.send(data);
             } else {
                 res.status(404).send({
-                    message: `Phone with id ${id} not found.`
+                    message: `Phone with id ${phoneId} not found for contact with id ${contactId}.`
                 });
             }
         })
@@ -80,19 +86,20 @@ exports.update = (req, res) => {
         });
 };
 
-// Delete one phone by id
+// Delete one phone by contactId and phoneId
 exports.delete = (req, res) => {
-    const id = req.params.phoneId;
+    const contactId = req.params.contactId;
+    const phoneId = req.params.phoneId;
 
     Phones.destroy({
-        where: { id: id },
-      })
+        where: { id: phoneId, contactId: contactId }
+    })
         .then(num => {
             if (num == 1) {
                 res.send({ message: "Phone was deleted successfully." });
             } else {
                 res.status(404).send({
-                    message: `Phone having id ${id} not found.`
+                    message: `Phone with id ${phoneId} not found for contact with id ${contactId}.`
                 });
             }
         })
