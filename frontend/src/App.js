@@ -4,9 +4,8 @@ import './index.css';
 function App() {
     const [contacts, getContacts] = useState([]);
     const [newContactName, setNewContactName] = useState("");
-    const setShowStats = useState(false); // New state variable
-    const [statsData, setStatsData] = useState(""); // State to store stats data
-
+    const [isDivVisible, setDivVisibility] = useState(false);
+    const [statsData, setStatsData] = useState(null);
 
     const fetchData = async (url, options = {}) => {
         const response = await fetch(url, options);
@@ -61,29 +60,35 @@ function App() {
     }
     };
 
-    const showStats = async () => {
+    const fetchStatsData = async () => {
         try {
-          const response = await fetchData("http://localhost:5000/api/stats");
+          const response = await fetchData('http://localhost:5000/api/stats');
           if (response) {
             const data = await response;
             setStatsData(data); // Store stats data in state
-            setShowStats(true); // Show the stats container
           } else {
-            const data = await response;
-            console.log("TEST********",data);
-
-            // alert("Error fetching statistics.");
+            console.log('Error fetching statistics.');
           }
         } catch (error) {
-          console.log("Error:", error);
-        //   alert("Error fetching statistics.");
+          console.log('Error:', error);
+        }
+      };
+
+      const toggleDiv = () => {
+        setDivVisibility(!isDivVisible);
+        if (isDivVisible) {
+          setStatsData(null);
+        } else {
+          fetchStatsData();
         }
       };
 
     return (
-        <div className="contentTitle">
-          <h1>Contactor</h1>
+    
           <div className="container">
+              <div className="contentTitle">
+            <h1>Contactor</h1>
+          </div>
             <div className="mainContainer">
               <h2 className="header">Contact</h2>
               <div className="contactForm">
@@ -115,28 +120,28 @@ function App() {
             <div className="footer">
             <p>Click a contact to view associated phone numbers</p>
             </div>
-            <div className="stats">
-            <p onClick={showStats}>Show Stats</p>
-            </div>
-            {showStats && ( // Render stats container if showStats is true
-            <div className="container-stats">
-            <h2>Statistics</h2>
-            {statsData ? (
-                <div>
-                <p>Total Contacts: {statsData.totalContacts}</p>
-                <p>Total Phones: {statsData.totalPhones}</p>
-                <p>Newest Contact Timestamp: {statsData.newestContactTimestamp}</p>
-                <p>Oldest Contact Timestamp: {statsData.oldestContactTimestamp}</p>
+            <div>
+                <div className="showButton" onClick={toggleDiv}>
+                    {isDivVisible ? 'Hide Stats' : 'Show Stats'}
                 </div>
-            ) : (
-                <p>Loading stats...</p>
-            )}
-            </div>
-            )}
-
+                {isDivVisible && (
+                    <div className="container-stats">
+                        {/* Display stats data when the div is visible */}
+                        {statsData ? (
+                            <div className="center-text">
+                            <p><b>Total Contacts:</b> <br />{statsData.totalContacts}</p>
+                            <p><b>Total Phones:</b> <br />{statsData.totalPhones}</p>
+                            <p><b>Newest Contact Timestamp:</b><br /> {statsData.newestContactTimestamp}</p>
+                            <p><b>Oldest Contact Timestamp:</b><br /> {statsData.oldestContactTimestamp}</p>
+                            </div>
+                        ) : (
+                            <p>Loading stats...</p>
+                        )}
+                    </div>
+                )}
             </div>
         </div>
-      );
+);
 }
 
 function ContactCard({ contact, deleteContact, fetchData }) {
@@ -205,6 +210,7 @@ function ContactCard({ contact, deleteContact, fetchData }) {
           </div>
           {showDetails && (
             <div>
+            <hr />
               <div className="phoneInput">
                 <input
                   className="input"
